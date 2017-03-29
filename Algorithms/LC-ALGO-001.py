@@ -29,18 +29,23 @@ def twoSum(nums, target, find_all=False):
         for n in nums:
 
             # We'll try to find the delta in our list
-            if target > n: delta = target - n
-            else: delta = n - target
+            if target > n:
+                delta = target - n
+            else:
+                delta = n - target
 
-            # If we can't index the delta, then no solution
-            try:
-                result.append([idx, nums.index(delta)])
-            except ValueError:
-                pass
+            # Unique elements only
+            if n != delta:
 
-            if not find_all:
-                if len(result) > 0: result = result[0]
-                break
+                # If we can't index the delta, then no solution
+                try:
+                    result.append([idx, nums.index(delta)])
+                except ValueError:
+                    pass
+
+                if not find_all:
+                    if len(result) > 0: result = result[0]
+                    break
             
             idx += 1
 
