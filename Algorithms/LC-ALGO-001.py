@@ -13,6 +13,11 @@
 #   $> python -m cProfile LC-ALGO-001.py
 #       31 function calls in 0.000 seconds (without I/O)
 #-------------------------------------------------------------
+#   Change Log
+#
+#       2017 03 28  Initial version.
+#                   Corrected to disallow non-distinct elements.
+#-------------------------------------------------------------
 
 def twoSum(nums, target, find_all=False):
     """
@@ -26,7 +31,8 @@ def twoSum(nums, target, find_all=False):
         idx = 0
 
         # O(n), where n = # of items in nums
-        for n in nums:
+        while idx < len(nums):
+            n = nums[idx]
 
             # We'll try to find the delta in our list
             if target > n:
@@ -40,12 +46,13 @@ def twoSum(nums, target, find_all=False):
                 # If we can't index the delta, then no solution
                 try:
                     result.append([idx, nums.index(delta)])
-                except ValueError:
-                    pass
 
-                if not find_all:
-                    if len(result) > 0: result = result[0]
-                    break
+                    if not find_all:
+                        if len(result) > 0: result = result[0]
+                        break
+                    
+                except ValueError:
+                    pass                    
             
             idx += 1
 
@@ -54,10 +61,12 @@ def twoSum(nums, target, find_all=False):
 #-------------------------------------------------------------
 
 if __name__ == '__main__':
-    nums = [15, 4, 10, 18, 7, 13, 5, 14, 2, 6, 19, 9, 8, 11, 12, 16, 17, 20, 3, 1]
-    target = 34
+    #nums = [15, 4, 10, 18, 7, 13, 5, 14, 2, 6, 19, 9, 8, 11, 12, 16, 17, 20, 3, 1]
+    nums = [15, 4, 10, 18, 7, 13, 5, 14, 2]
+    target = 27
 
     solutions = twoSum(nums, target, True)
 
+    # Assuming array-of-arrays returned
     for sol in solutions:
         print '{} + {} = {}'.format(nums[sol[0]], nums[sol[1]], target)
